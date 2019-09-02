@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.merchandise.MerchandiseMapper">
+    <resultMap id="MerchandiseMap" type="pojo.Merchandise">
+        <id column="mId" property="mId"/>
+        <result column="merchandiseId" property="merchandiseId"/>
+        <result column="merchandiseCommodity" property="merchandiseCommodity"/>
+        <result column="merchandiseMasterMap" property="merchandiseMasterMap"/>
+        <result column="merchandiseTitle" property="merchandiseTitle"/>
+        <result column="merchandiseOriginalPrice" property="merchandiseOriginalPrice"/>
+        <result column="merchandisePresentPrice" property="merchandisePresentPrice"/>
+        <result column="merchandiseBrandId" property="merchandiseBrandId"/>
+    </resultMap>
+
+    <resultMap id="MerchandiseDetailsMap" type="pojo.MerchandiseDetails">
+        <id column="merchandiseDetailsId" property="merchandiseDetailsId"/>
+        <result column="merchandiseId" property="merchandiseId"/>
+        <result column="merchandiseHeaderImages" property="merchandiseHeaderImages"/>
+        <result column="merchandiseFooterContent" property="merchandiseFooterContent"/>
+        <result column="merchandiseSalesCount" property="merchandiseSalesCount"/>
+        <result column="merchandisePresentIntegral" property="merchandisePresentIntegral"/>
+        <result column="merchandiseWeight" property="merchandiseWeight"/>
+        <result column="merchandiseOnTime" property="merchandiseOnTime"/>
+        <result column="merchandiseOutTime" property="merchandiseOutTime"/>
+        <result column="merchandiseFreight" property="merchandiseFreight"/>
+    </resultMap>
+
+    <resultMap id="Merchandise_DetailsMap" type="customPojo.Merchandise_Details">
+        <association property="merchandise" resultMap="MerchandiseMap"/>
+        <association property="merchandiseDetails" resultMap="MerchandiseDetailsMap"/>
+    </resultMap>
+    <select id="selectAll" resultType="pojo.Merchandise">SELECT * FROM merchandise</select>
+
+    <insert id="insertMerchandise">INSERT INTO merchandise VALUES(NULL,#{merchandiseId},#{merchandiseCommodity},
+#{merchandiseMasterMap},#{merchandiseTitle},#{merchandiseOriginalPrice},#{merchandisePresentPrice},#{merchandiseBrandId})</insert>
+
+    <delete id="deleteById">DELETE FROM merchandise WHERE MID=#{mId}</delete>
+
+    <update id="upudateById">
+UPDATE merchandise SET merchandiseId=#{merchandiseId},merchandiseCommodity=#{merchandiseCommodity},
+merchandiseMasterMap=#{merchandiseMasterMap},merchandiseTitle=#{merchandiseTitle},merchandiseOriginalPrice=#{merchandiseOriginalPrice},
+merchandisePresentPrice=#{merchandiseOriginalPrice},merchandiseBrandId=#{merchandiseBrandId
+</update>
+
+    <select id="selectId" resultType="int" parameterType="string">
+        SELECT COUNT(*) FROM merchandise WHERE merchandiseId=#{merchandiseId}
+</select>
+    
+    <select id="selectFaddish" resultType="pojo.Merchandise">
+        SELECT
+            merchandise.mId,
+            merchandise.merchandiseId,
+            merchandise.merchandiseCommodity,
+            merchandise.merchandiseMasterMap,
+            merchandise.merchandiseTitle,
+            merchandise.merchandiseOriginalPrice,
+            merchandise.merchandisePresentPrice,
+            merchandise.merchandiseBrandId,
+            merchandiseDetails.merchandiseSalesCount
+            FROM
+            merchandise
+            INNER JOIN merchandiseDetails ON merchandise.merchandiseId = merchandiseDetails.merchandiseId
+            ORDER BY
+            merchandiseDetails.merchandiseSalesCount DESC
+            LIMIT 0, #{limit}
+    </select>
+
+    <select id="selectByIndex" resultType="pojo.Merchandise">
+      SELECT
+            merchandise.mId,
+            merchandise.merchandiseId,
+            merchandise.merchandiseCommodity,
+            merchandise.merchandiseMasterMap,
+            merchandise.merchandiseTitle,
+            merchandise.merchandiseOriginalPrice,
+            merchandise.merchandisePresentPrice,
+            merchandise.merchandiseBrandId,
+            merchandiseDetails.merchandiseSalesCount
+        FROM
+            merchandise
+            INNER JOIN merchandiseDetails ON merchandise.merchandiseId = merchandiseDetails.merchandiseId
+        WHERE
+            merchandise.merchandiseCommodity LIKE CONCAT( #{commodityId}, '%' )
+
+            LIMIT 8
+    </select>
+
+    <select id="selectHot" resultMap="Merchandise_DetailsMap">
+       SELECT
+merchandise.mId,
+merchandise.merchandiseId,
+merchandise.merchandiseMasterMap,
+merchandise.merchandiseTitle,
+merchandise.merchandisePresentPrice,
+merchandiseDetails.merchandiseId,
+merchandiseDetails.merchandiseSalesCount
+FROM
+merchandise
+INNER JOIN merchandiseDetails ON merchandise.merchandiseId = merchandiseDetails.merchandiseId
+ORDER BY
+RAND()
+LIMIT #{start}, #{count}
+
+    </select>
+
+    <select id="selectMerchandiseCount" resultType="int">
+        SELECT COUNT(*) FROM merchandise
+    </select>
+
+    <select id="selectHeightSellCount" resultMap="Merchandise_DetailsMap">
+        SELECT
+merchandise.mId,
+merchandise.merchandiseId,
+merchandise.merchandiseMasterMap,
+merchandise.merchandiseTitle,
+merchandise.merchandisePresentPrice,
+merchandiseDetails.merchandiseSalesCount,
+merchandiseDetails.merchandiseId
+FROM
+merchandise
+INNER JOIN merchandiseDetails ON merchandise.merchandiseId = merchandiseDetails.merchandiseId
+ORDER BY
+merchandiseDetails.merchandiseSalesCount DESC
+LIMIT #{start}, #{count}
+    </select>
+
+    <select id="selectLowPrice" resultMap="Merchandise_DetailsMap">
+       SELECT
+merchandise.mId,
+merchandise.merchandiseId,
+merchandise.merchandiseMasterMap,
+merchandise.merchandiseTitle,
+merchandise.merchandisePresentPrice,
+merchandiseDetails.merchandiseId,
+merchandiseDetails.merchandiseSalesCount
+FROM
+merchandise
+INNER JOIN merchandiseDetails ON merchandise.merchandiseId = merchandiseDetails.merchandiseId
+ORDER BY
+merchandise.merchandisePresentPrice ASC
+LIMIT #{start}, #{count}
+    </select>
+</mapper>

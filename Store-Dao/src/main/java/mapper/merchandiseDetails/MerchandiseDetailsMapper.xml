@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.merchandiseDetails.MerchandiseDetailsMapper">
+    <insert id="insertInfo">
+INSERT INTO merchandiseDetails VALUES(NULL,#{merchandiseId},
+#{merchandiseHeaderImages},#{merchandiseFooterContent},#{merchandiseSalesCount},
+    #{merchandisePresentIntegral},#{merchandiseWeight},NOW(),NULL,#{merchandiseFreight})
+</insert>
+
+    <resultMap id="MerchandiseMap" type="pojo.Merchandise">
+        <id column="mId" property="mId"/>
+        <result column="merchandiseId" property="merchandiseId"/>
+        <result column="merchandiseCommodity" property="merchandiseCommodity"/>
+        <result column="merchandiseMasterMap" property="merchandiseMasterMap"/>
+        <result column="merchandiseTitle" property="merchandiseTitle"/>
+        <result column="merchandiseOriginalPrice" property="merchandiseOriginalPrice"/>
+        <result column="merchandisePresentPrice" property="merchandisePresentPrice"/>
+        <result column="merchandiseBrandId" property="merchandiseBrandId"/>
+    </resultMap>
+
+    <resultMap id="MerchandiseDetailsMap" type="pojo.MerchandiseDetails">
+        <id column="merchandiseDetailsId" property="merchandiseDetailsId"/>
+        <result column="merchandiseId" property="merchandiseId"/>
+        <result column="merchandiseHeaderImages" property="merchandiseHeaderImages"/>
+        <result column="merchandiseFooterContent" property="merchandiseFooterContent"/>
+        <result column="merchandiseSalesCount" property="merchandiseSalesCount"/>
+        <result column="merchandisePresentIntegral" property="merchandisePresentIntegral"/>
+        <result column="merchandiseWeight" property="merchandiseWeight"/>
+        <result column="merchandiseOnTime" property="merchandiseOnTime"/>
+        <result column="merchandiseOutTime" property="merchandiseOutTime"/>
+        <result column="merchandiseFreight" property="merchandiseFreight"/>
+    </resultMap>
+
+    <resultMap id="Merchandise_DetailsMap" type="customPojo.Merchandise_Details">
+        <association property="merchandise" resultMap="MerchandiseMap"/>
+        <association property="merchandiseDetails" resultMap="MerchandiseDetailsMap"/>
+    </resultMap>
+
+    <select id="selectMerchandise_DetailsById" resultMap="Merchandise_DetailsMap">
+        SELECT
+            *
+            FROM
+            merchandise
+            INNER JOIN merchandiseDetails ON merchandise.merchandiseId = merchandiseDetails.merchandiseId
+            where
+            merchandise.merchandiseId = #{merchandiseId}
+    </select>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.collect.CollectMapper">
+    <insert id="insertCollect" parameterType="pojo.Collect">
+        INSERT INTO `collect`(`merchandiseId`,`userPhone`) VALUES(#{merchandiseId},#{userPhone})
+    </insert>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM `collect` WHERE `collectId`=#{collectId}
+    </delete>
+
+    <update id="updateById" parameterType="pojo.Collect">
+        UPDATE `collect` SET `merchandiseId`=#{merchandiseId},`userPhone`=#{userPhone} WHERE `collectId`=#{collectId}
+    </update>
+
+    <select id="selectAll" resultType="pojo.Collect">
+        SELECT * FROM `collect`
+    </select>
+</mapper>

@@ -1,0 +1,98 @@
+server:
+  port: 8050
+  tomcat:
+    uri-encoding: UTF-8
+
+#dubbo
+dubbo:
+  application:
+    name: Store
+  scan:
+    base-packages: service
+  protocol:
+    port: 20880
+  config-center:
+    address: zookeeper://106.12.82.140:2181
+  registry:
+    address: zookeeper://106.12.82.140:2181
+  metadata-report:
+    address: zookeeper://106.12.82.140:2181
+
+#spring ---------------------------------------------------------------------------------------------------------
+#数据库
+spring:
+  datasource:
+    username: root
+    password: mengcheng@1989
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://118.25.183.147:3306/hfdb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false&verifyServerCertificate=false&autoReconnct=true&autoReconnectForPools=true&allowMultiQueries=true&autoReconnect=true
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+
+    filters: stat,wall
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+
+  #redis
+  redis:
+    host: 106.12.24.9
+    port: 6379
+    password: zhangmengchengwuzhixiang
+    database: 15
+    timeout: 50000
+    jedis:
+      pool:
+        # 最大空闲连接数
+        max-idle: 8
+        # 最小空闲连接数
+        min-idle: 2
+        # 最大活跃连接数，负数为不限制
+        max-active: -1
+        # 等待可用连接的最大时间，负数为不限制
+        max-wait:  -1
+
+  #热部署
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+  freemarker:
+    cache: false
+
+  #配置中文乱码
+  http:
+    encoding:
+      charset: utf-8
+      force: true
+      enabled: true
+
+  #activeMQ
+  activemq:
+    user: admin
+    password: admin
+    broker-url: tcp://192.168.30.136:61616
+    in-memory: true
+    pool:
+      enabled: true
+      max-connections: 10
+  jms:
+    pub-sub-domain: true
+    template:
+      default-destination: active.default.destination
+#spring ---------------------------------------------------------------------------------------------------------
+
+#sql日志输出
+logging:
+  level:
+    mapper: debug

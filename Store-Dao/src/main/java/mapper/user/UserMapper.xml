@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.user.UserMapper">
+
+    <select id="selectAll" resultType="pojo.User">
+        select * from `user`;
+    </select>
+
+    <insert id="insertUser" parameterType="pojo.User">
+        insert into `user` (userPhone, userPassword, userSex, userBirthday, userPhoto, userTime,gradeId) values (
+            #{userPhone} , #{userPassword} , 'S' , null ,'http://106.12.86.106:8888/group1/M00/00/00/wKgABlzWHyaAah_wAAAvy-suULg541.jpg'
+            , now() , 1
+        );
+    </insert>
+
+    <delete id="deleteUserById">
+        delete from `user` where userId = #{id}
+    </delete>
+
+    <select id="getPasswordByPhone" resultType="pojo.User">
+        select userPassword from `user` where userPhone = #{phone};
+    </select>
+
+    <select id="checkPhone" resultType="int">
+        select count(0) from `user` where userPhone = #{phone};
+    </select>
+
+    <select id="selectUserByPhone" resultType="pojo.User">
+        select userPhone,userPhoto,userSex,userBirthday,gradeId from `user` where userPhone = #{phone};
+    </select>
+
+    <update id="updateUserByPhone" parameterType="pojo.User">
+        update `user` set userSex = #{userSex}
+        <if test="userBirthday != ''">
+            , userBirthday = #{userBirthday}
+        </if>
+        where userPhone = #{userPhone};
+    </update>
+
+    <update id="updatePhotoByPhone">
+        update `user` set userPhoto = #{imageUrl} where userPhone = #{phone};
+    </update>
+
+    <update id="resetPwd" parameterType="pojo.User">
+        update `user` set userPassword = #{userPassword} where userPhone = #{userPhone};
+    </update>
+
+    <select id="selectPwdByPhone" resultType="pojo.User">
+        select userPassword from user where userPhone = #{phone};
+    </select>
+
+    <select id="selectPhotoByPhone" resultType="pojo.User">
+        select userPhoto from user where userPhone = #{phone};
+    </select>
+
+</mapper>

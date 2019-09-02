@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Store-CustomPojo" />
+        <module name="Store-Timer" />
+        <module name="Store-Controller" />
+        <module name="Store-Pojo" />
+        <module name="Store-Dao" />
+        <module name="Store-Config" />
+        <module name="Store-Service" />
+        <module name="Store-Util" />
+        <module name="Store-Interface" />
+        <module name="Store-Interceptor" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Store" target="1.8" />
+      <module name="Store-Config" target="1.8" />
+      <module name="Store-Controller" target="1.8" />
+      <module name="Store-CustomPojo" target="1.8" />
+      <module name="Store-Dao" target="1.8" />
+      <module name="Store-Interceptor" target="1.8" />
+      <module name="Store-Interface" target="1.8" />
+      <module name="Store-Pojo" target="1.8" />
+      <module name="Store-Service" target="1.8" />
+      <module name="Store-Timer" target="1.8" />
+      <module name="Store-Util" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Store" options="" />
+      <module name="Store-Config" options="-parameters" />
+      <module name="Store-Controller" options="-parameters" />
+      <module name="Store-CustomPojo" options="-parameters" />
+      <module name="Store-Dao" options="-parameters" />
+      <module name="Store-Interceptor" options="-parameters" />
+      <module name="Store-Interface" options="-parameters" />
+      <module name="Store-Pojo" options="-parameters" />
+      <module name="Store-Service" options="-parameters" />
+      <module name="Store-Timer" options="-parameters" />
+      <module name="Store-Util" options="-parameters" />
+    </option>
+  </component>
+</project>

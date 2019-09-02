@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.burse.BurseMapper">
+    <!--查询所有钱包信息-->
+    <select id="selectAll" resultType="pojo.Burse">SELECT * FROM burse</select>
+
+    <!--根据bureseId查询信息-->
+    <select id="selectById" resultType="pojo.Burse">SELECT * FROM burse WHERE burseid=#{burseId}</select>
+
+    <!--添加信息-->
+    <insert id="insertBurse">INSERT INTO burse VALUE(NULL,#{userPhone},0)</insert>
+
+    <!--根据bureseId删除信息-->
+    <delete id="deleteById">DELETE FROM burse WHERE burseid=#{burseId}</delete>
+
+    <!--根据burseId修改信息-->
+    <update id="updateById">UPDATE burse SET userPhone=#{userPhone},burseBalance=#{burseBalance} WHERE burseid=#{burseId}</update>
+
+    <select id="selectByPhone" resultType="pojo.Burse">
+        select * from burse where userPhone = #{phone};
+    </select>
+
+    <update id="operationBalance">
+        update burse set
+        <if test="type == 0">
+            burseBalance = burseBalance + #{money}
+        </if>
+        <if test="type == 1">
+            burseBalance = burseBalance - #{money}
+        </if>
+        where userPhone = #{phone};
+    </update>
+</mapper>

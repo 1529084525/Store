@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.notice.NoticeMapper">
+    <resultMap id="NoticeType" type="pojo.NoticeType">
+        <result column="noticeTypeId" property="noticeTypeId"></result>
+        <result column="noticeTypeName" property="noticeTypeName"></result>
+    </resultMap>
+    <resultMap id="Notice" type="pojo.Notice">
+        <result column="noticeId" property="noticeId"></result>
+        <result column="noticeTypeId" property="noticeTypeId"></result>
+        <result column="noticeTitle" property="noticeTitle"></result>
+        <result column="noticeTime" property="noticeTime"></result>
+        <result column="noticeContent" property="noticeContent"></result>
+        <result column="noticeHotCount" property="noticeHotCount"></result>
+        <result column="noticeUser" property="noticeUser"></result>
+        <association property="noticeType" resultMap="NoticeType"></association>
+    </resultMap>
+
+    <insert id="insertNotice">
+        INSERT INTO notice VALUES(NULL,#{noticeTypeId},#{noticeTitle},NOW(),#{noticeContent},0,#{noticeUser})
+    </insert>
+
+    <select id="selectAll" resultMap="Notice">
+        SELECT * FROM notice n INNER JOIN noticeType o ON n.noticeTypeId=o.noticeTypeId  ORDER BY noticeTime DESC
+    </select>
+
+    <select id="selectInfoById" resultMap="Notice">
+        SELECT * FROM notice n INNER JOIN noticeType o ON n.noticeTypeId=o.noticeTypeId WHERE n.noticeId=#{noticeId}
+    </select>
+
+    <select id="selectCount" resultType="int">SELECT COUNT(*) FROM notice</select>
+
+    <select id="selectPage" resultMap="Notice">
+       SELECT
+notice.noticeId,
+notice.noticeTypeId,
+notice.noticeTitle,
+notice.noticeTime,
+notice.noticeContent,
+notice.noticeHotCount,
+notice.noticeUser,
+noticeType.noticeTypeName,
+noticeType.noticeTypeId
+FROM
+notice
+INNER JOIN noticeType ON notice.noticeTypeId = noticeType.noticeTypeId
+ORDER BY
+notice.noticeTime DESC
+LIMIT #{start}, #{count}
+    </select>
+
+    <select id="selectNew" resultMap="Notice">
+       SELECT* FROM notice n  INNER JOIN noticeType t ON n.noticeTypeId=t.noticeTypeId ORDER BY noticeTime DESC LIMIT 1
+    </select>
+
+    <update id="updateHotCount" parameterType="pojo.Notice">
+        UPDATE notice SET noticeHotCount=noticeHotCount+1 WHERE noticeId=#{noticeId}
+    </update>
+</mapper>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.shoppingCar.ShoppingCarMapper">
+
+    <insert id="insertCar" parameterType="pojo.ShoppingCar">
+        insert into shoppingCar (userPhone, merchandiseId, merchandiseColor, merchandiseSize, merchandiseCount, merchandiseMoney, shoppingCarTime) values (
+            #{userPhone},#{merchandiseId},#{merchandiseColor},#{merchandiseSize},#{merchandiseCount},#{merchandiseMoney},now()
+        );
+    </insert>
+    <insert id="insertByLogin" parameterType="pojo.ShoppingCar">
+        insert into shoppingCarByNoLogin (userPhone, merchandiseId, merchandiseColor, merchandiseSize, merchandiseCount, merchandiseMoney, shoppingCarTime) values (
+            #{userPhone},#{merchandiseId},#{merchandiseColor},#{merchandiseSize},#{merchandiseCount},#{merchandiseMoney},now()
+        );
+    </insert>
+
+    <update id="updateCar">
+        update
+            <if test="type == 0">shoppingCar</if>
+            <if test="type == 1">shoppingCarByNoLogin</if>
+         set merchandiseCount = #{shoppingCar.merchandiseCount} ,
+            merchandiseMoney = #{shoppingCar.merchandiseMoney}
+            where shoppingCarId = #{shoppingCar.shoppingCarId};
+    </update>
+
+    <delete id="deleteCar">
+        delete from shoppingCar where shoppingCarId = #{id}
+    </delete>
+
+    <select id="selectCountByPhone" resultType="int">
+        select count(0) from
+            <if test="type == 0">shoppingCar</if>
+            <if test="type == 1">shoppingCarByNoLogin</if>
+         where userPhone = #{phone};
+    </select>
+
+    <select id="selectAllByPhone" resultType="customPojo.MerchandiseShoppingCar">
+        SELECT
+            aa.shoppingCarId,
+            aa.userPhone,
+            aa.merchandiseId,
+            aa.merchandiseColor,
+            aa.merchandiseSize,
+            aa.merchandiseCount,
+            aa.merchandiseMoney AS money1,
+            merchandise.merchandiseTitle,
+            merchandiseSKU.merchandiseImg,
+            merchandiseSKU.merchandiseMoney AS money2
+        FROM
+            <if test="type == 0">shoppingCar</if>
+            <if test="type == 1">shoppingCarByNoLogin</if>
+             as aa
+            INNER JOIN merchandise ON merchandise.merchandiseId = aa.merchandiseId
+            INNER JOIN merchandiseSKU ON aa.merchandiseId = merchandiseSKU.merchandiseId
+            AND aa.merchandiseColor = merchandiseSKU.merchandiseColor
+            AND aa.merchandiseSize = merchandiseSKU.merchandiseSize
+        WHERE
+            aa.userPhone = #{phone}
+    </select>
+
+    <select id="selectAllByNoLogin"  resultType="customPojo.MerchandiseShoppingCar">
+        SELECT
+            shoppingCar.shoppingCarId,
+            shoppingCar.merchandiseId,
+            shoppingCar.merchandiseColor,
+            shoppingCar.merchandiseSize,
+            shoppingCar.merchandiseCount,
+            shoppingCar.merchandiseMoney AS money1,
+            merchandise.merchandiseTitle,
+            merchandiseSKU.merchandiseImg,
+            merchandiseSKU.merchandiseMoney AS money2
+        FROM
+            shoppingCar
+            INNER JOIN merchandise ON merchandise.merchandiseId = shoppingCar.merchandiseId
+            AND '' = ''
+            INNER JOIN merchandiseSKU ON shoppingCar.merchandiseId = merchandiseSKU.merchandiseId
+        WHERE
+        merchandise.merchandiseId in <foreach collection="shoppingCar" open="(" separator="," close=")" item="shop">
+                                        #{shop.merchandiseId}
+                                    </foreach>
+        AND merchandiseSKU.merchandiseColor in <foreach collection="shoppingCar" open="(" separator="," close=")" item="shop">
+                                                    #{shop.merchandiseColor}
+                                                </foreach>
+        AND merchandiseSKU.merchandiseSize in <foreach collection="shoppingCar" open="(" separator="," close=")" item="shop">
+                                                    #{shop.merchandiseSize}
+                                                </foreach>
+        GROUP BY
+        shoppingCar.merchandiseId
+    </select>
+
+    <select id="selectAll" resultType="pojo.ShoppingCar">
+        select * from
+            <if test="type == 0">shoppingCar</if>
+            <if test="type == 1">shoppingCarByNoLogin</if>
+         where userPhone = #{phone}
+    </select>
+
+    <delete id="deleteAll">
+        delete from
+            <if test="type==0">shoppingCar</if>
+            <if test="type==1">shoppingCarByNoLogin</if>
+            where userPhone = #{phone}
+    </delete>
+
+    <select id="checkExist"  resultType="pojo.ShoppingCar">
+        select * from
+            <if test="type == 0">shoppingCar</if>
+            <if test="type == 1">shoppingCarByNoLogin</if>
+         where userPhone = #{shoppingCar.userPhone} and
+        merchandiseColor = #{shoppingCar.merchandiseColor} and merchandiseSize = #{shoppingCar.merchandiseSize};
+    </select>
+
+    <select id="selectById" resultType="pojo.ShoppingCar">
+        select * from shoppingCar where shoppingCarId = #{id};
+    </select>
+</mapper>

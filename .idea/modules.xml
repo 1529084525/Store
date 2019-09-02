@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Store.iml" filepath="$PROJECT_DIR$/Store.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Store-Config/Store-Config.iml" filepath="$PROJECT_DIR$/Store-Config/Store-Config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Store-Controller/Store-Controller.iml" filepath="$PROJECT_DIR$/Store-Controller/Store-Controller.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Store-CustomPojo/Store-CustomPojo.iml" filepath="$PROJECT_DIR$/Store-CustomPojo/Store-CustomPojo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Store-Dao/Store-Dao.iml" filepath="$PROJECT_DIR$/Store-Dao/Store-Dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Store-Interceptor/Store-Interceptor.iml" filepath="$PROJECT_DIR$/Store-Interceptor/Store-Interceptor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Store-Interface/Store-Interface.iml" filepath="$PROJECT_DIR$/Store-Interface/Store-Interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Store-Pojo/Store-Pojo.iml" filepath="$PROJECT_DIR$/Store-Pojo/Store-Pojo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Store-Service/Store-Service.iml" filepath="$PROJECT_DIR$/Store-Service/Store-Service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Store-Timer/Store-Timer.iml" filepath="$PROJECT_DIR$/Store-Timer/Store-Timer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Store-Util/Store-Util.iml" filepath="$PROJECT_DIR$/Store-Util/Store-Util.iml" />
+    </modules>
+  </component>
+</project>

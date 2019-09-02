@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.realNameAuthentication.RealNameAuthenticationMapper">
+
+    <insert id="insertAuthentication" parameterType="pojo.RealNameAuthentication">
+        insert into realNameAuthentication ( userPhone, authenticationName, authenticationCode, authenticationImage) values (
+            #{userPhone},#{authenticationName},#{authenticationCode},#{authenticationImage}
+        );
+    </insert>
+
+    <select id="checkExist" resultType="int">
+        select count(0) from realNameAuthentication where authenticationCode = #{code};
+    </select>
+
+    <select id="selectOne" resultType="pojo.RealNameAuthentication">
+        select userPhone,authenticationName from realNameAuthentication where userPhone = #{phone};
+    </select>
+</mapper>

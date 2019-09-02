@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.merchandiseSKU.MerchandiseSKUMapper">
+    <insert id="insertInfo">
+        INSERT INTO merchandiseSKU VALUES(NULL,#{merchandiseId},#{merchandiseColor},#{merchandiseImg},#{merchandiseSize},
+        #{merchandiseCount},#{merchandiseMoney})
+    </insert>
+
+    <select id="selectSizeById" resultType="pojo.MerchandiseSKU">
+        SELECT
+            merchandiseSKU.merchandiseSize
+        FROM
+            merchandiseSKU
+        WHERE
+            merchandiseSKU.merchandiseId = #{merchandiseId}
+        GROUP BY
+            merchandiseSKU.merchandiseSize
+    </select>
+
+    <select id="selectColorById" resultType="pojo.MerchandiseSKU">
+        SELECT
+            merchandiseSKU.merchandiseColor,
+            merchandiseSKU.merchandiseImg
+        FROM
+            merchandiseSKU
+        WHERE
+            merchandiseSKU.merchandiseId = #{merchandiseId}
+        GROUP BY
+            merchandiseSKU.merchandiseColor
+    </select>
+
+    <select id="selectCountById" resultType="int">
+        SELECT
+            sum( merchandiseCount )
+        FROM
+            merchandiseSKU
+        WHERE
+            merchandiseId = #{merchandiseId}
+    </select>
+
+    <select id="selectRepertoryByMerchandise" resultType="int">
+        SELECT
+            merchandiseSKU.merchandiseCount
+        FROM
+            merchandiseSKU
+        WHERE
+            merchandiseSKU.merchandiseId = #{id}
+            AND merchandiseSKU.merchandiseColor = #{c}
+            AND merchandiseSKU.merchandiseSize = #{s}
+    </select>
+
+    <select id="selectByMerchandise" resultType="pojo.MerchandiseSKU">
+          SELECT
+           *
+        FROM
+            merchandiseSKU
+        WHERE
+            merchandiseSKU.merchandiseId = #{id}
+            AND merchandiseSKU.merchandiseColor = #{c}
+            AND merchandiseSKU.merchandiseSize = #{s}
+    </select>
+
+    <select id="selectByShoppingCar" parameterType="pojo.ShoppingCar" resultType="pojo.MerchandiseSKU">
+        SELECT
+           *
+        FROM
+            merchandiseSKU
+        WHERE
+            merchandiseSKU.merchandiseId = #{merchandiseId}
+            AND merchandiseSKU.merchandiseColor = #{merchandiseColor}
+            AND merchandiseSKU.merchandiseSize = #{merchandiseSize}
+    </select>
+
+    <select id="selectMoneyByColor" resultType="int">
+        SELECT DISTINCT merchandiseMoney FROM `merchandiseSKU`
+        WHERE merchandiseId=#{merchandiseId}
+        AND merchandiseColor=#{merchandiseColor}
+    </select>
+</mapper>

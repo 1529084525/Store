@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.loveClothes.LoveClothesMapper">
+    <insert id="insertLove">
+        INSERT INTO  loveClothes VALUES(NULL,#{userPhone},#{merchandiseId},NOW())
+    </insert>
+
+    <delete id="deleteLoveById">
+        DELETE FROM loveClothes WHERE userPhone=#{userPhone} AND merchandiseId=#{merchandiseId}
+    </delete>
+
+    <select id="selectLove" resultType="int">
+        SELECT count(*) FROM loveClothes WHERE userPhone=#{userPhone} AND merchandiseId=#{merchandiseId}
+    </select>
+</mapper>

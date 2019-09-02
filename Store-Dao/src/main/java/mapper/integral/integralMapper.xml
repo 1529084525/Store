@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.integral.IntegralMapper">
+    <insert id="insertIntegral" parameterType="pojo.Integral">
+        insert into integral (userPhone, integralBalance) values (
+         #{userPhone},#{integralBalance}
+        );
+    </insert>
+
+    <update id="operationIntegral">
+        update integral set
+        <if test="type == 0">
+            integralBalance = integralBalance + #{integral}
+        </if>
+        <if test="type == 1">
+            integralBalance = integralBalance - #{integral}
+        </if>
+        where userPhone = #{phone};
+    </update>
+
+    <select id="selectByPhone" resultType="pojo.Integral">
+        select * from integral where userPhone = #{phone};
+    </select>
+</mapper>

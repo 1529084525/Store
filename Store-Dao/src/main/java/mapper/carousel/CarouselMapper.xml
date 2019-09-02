@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.carousel.CarouselMapper">
+    <!--查询所有轮播信息-->
+    <select id="selectAll" resultType="pojo.Carousel">SELECT * FROM carousel</select>
+
+    <!--根据carouselId查询信息-->
+    <select id="selectById" resultType="pojo.Carousel">SELECT * FROM carousel WHERE carouselId=#{carouselId}</select>
+
+    <!--添加轮播信息-->
+    <insert id="insertCarousel">INSERT INTO carousel VALUE(NULL,#{carouselImage},#{carouselUrl},#{carouselStatus},#{carouselIndex})</insert>
+
+    <!--根据carouselId删除信息-->
+    <delete id="deleteById">DELETE FROM carousel WHERE carouselId=#{carouselId}</delete>
+
+    <!--根据carouselId修改信息-->
+    <update id="updateById">UPDATE carousel SET carouselImage=#{carouselImage},carouselUrl=#{carouselUrl},carouselStatus=#{carouselStatus},carouselIndex=#{carouselIndex} WHERE carouselId=#{carouselId}</update>
+
+    <!--根据状态查询所有-->
+    <select id="selectAllCarouselStatus" resultType="pojo.Carousel">
+        SELECT * FROM `carousel` WHERE `carouselStatus` = 0 ORDER BY carouselIndex DESC
+    </select>
+</mapper>

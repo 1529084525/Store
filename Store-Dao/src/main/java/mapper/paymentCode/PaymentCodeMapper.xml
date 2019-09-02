@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.paymentCode.PaymentCodeMapper">
+
+    <insert id="insertPayment" parameterType="pojo.PaymentCode">
+       insert into paymentCode (userPhone, paymentPassword, paymentCodeTime) values (
+        #{userPhone},#{paymentPassword},now()
+       );
+    </insert>
+
+    <select id="checkExist" resultType="int">
+        select count(0) from paymentCode where userPhone = #{phone};
+    </select>
+
+    <select id="checkTure" parameterType="pojo.PaymentCode" resultType="int">
+        select * from paymentCode where userPhone = #{userPhone} and paymentPassword = #{paymentPassword};
+    </select>
+
+    <update id="updatePayment" parameterType="pojo.PaymentCode">
+        update paymentCode set paymentPassword = #{paymentPassword} where userPhone = #{userPhone};
+    </update>
+
+    <select id="selectByPhone" resultType="pojo.PaymentCode">
+        select * from paymentCode where userPhone = #{phone};
+    </select>
+
+    <delete id="deleteByPhone">
+        delete from paymentCode where userPhone = #{phone};
+    </delete>
+</mapper>

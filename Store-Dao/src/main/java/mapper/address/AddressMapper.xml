@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.address.AddressMapper">
+    <!--根据addressId查询地址-->
+    <select id="selectById" resultType="pojo.Address">SELECT * FROM address WHERE addressid=#{addressId}</select>
+
+    <!-- 查询所有地址-->
+    <select id="selectAll" resultType="pojo.Address">SELECT * FROM address </select>
+
+    <!--添加地址-->
+    <insert id="insertAddress">
+        INSERT INTO address VALUES (NULL,#{userPhone},#{consignee},#{location},#{detailsAddress},#{consigneePhone},#{defaultAddress})
+    </insert>
+
+    <!--根据addressId删除-->
+    <delete id="deleteById">DELETE FROM address WHERE addressid=#{addressId}</delete>
+
+    <!--根据id修改信息-->
+    <update id="updateById">
+        UPDATE address SET
+        consignee=#{consignee},
+        detailsAddress=#{detailsAddress},
+        consigneePhone=#{consigneePhone}
+        WHERE addressid=#{addressId}
+    </update>
+
+    <select id="selectAddressByPhone" resultType="pojo.Address">
+        select * from address where userPhone = #{phone} order by defaultAddress desc ;
+    </select>
+
+    <update id="updateDefaultAddressByPhone">
+        update address set defaultAddress = 0 where userPhone = #{phone};
+    </update>
+
+    <select id="selectAddressById" resultType="pojo.Address">
+        select * from address where addressId = #{id};
+    </select>
+
+    <update id="updateDefault" >
+        update address set defaultAddress = 1 where addressId = #{id};
+    </update>
+</mapper>

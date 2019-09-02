@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.brand.BrandMapper">
+
+    <!--查询所有品牌-->
+    <select id="selectAll" resultType="pojo.Brand">SELECT * FROM brand </select>
+
+    <!--根据brandId查询品牌信息-->
+    <select id="selectById" resultType="pojo.Brand">SELECT * FROM brand WHERE brandid=#{brandId}</select>
+
+    <!--添加品牌信息-->
+    <insert id="insertBrand">INSERT INTO brand VALUE(NULL,#{brandName},#{brandLogo},#{brandAddress},#{brandComment},#{brandTime})</insert>
+
+    <!--根据brandId删除品牌信息-->
+    <delete id="deleteById">DELETE FROM brand WHERE brandid=#{brandId}</delete>
+
+    <!--修改品牌信息-->
+    <update id="updateById">UPDATE brand SET brandName=#{brandName},brandLogo=#{brandLogo},brandAddress=#{brandAddress},brandComment=#{brandComment},brandTime=#{brandTime WHERE brandid=#{brandId}</update>
+
+    <select id="selectAllByDesc" resultType="pojo.Brand">
+        SELECT
+        brand.brandId,
+        brand.brandName,
+        Count( merchandise.merchandiseBrandId ) AS count
+        FROM
+            brand
+            INNER JOIN merchandise ON brand.brandId = merchandise.merchandiseBrandId
+        GROUP BY
+            merchandise.merchandiseBrandId
+        ORDER BY
+            count DESC
+
+    </select>
+</mapper>
