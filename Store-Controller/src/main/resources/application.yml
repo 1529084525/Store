@@ -12,11 +12,11 @@ dubbo:
   protocol:
     port: 20880
   config-center:
-    address: zookeeper://106.12.82.140:2181
+    address: zookeeper:
   registry:
-    address: zookeeper://106.12.82.140:2181
+    address: zookeeper:
   metadata-report:
-    address: zookeeper://106.12.82.140:2181
+    address: zookeeper:
 
 #spring ---------------------------------------------------------------------------------------------------------
 #数据库
@@ -25,7 +25,7 @@ spring:
     username: root
     password: mengcheng@1989
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://118.25.183.147:3306/hfdb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false&verifyServerCertificate=false&autoReconnct=true&autoReconnectForPools=true&allowMultiQueries=true&autoReconnect=true
+    url: jdbc:mysql:///hfdb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false&verifyServerCertificate=false&autoReconnct=true&autoReconnectForPools=true&allowMultiQueries=true&autoReconnect=true
     type: com.alibaba.druid.pool.DruidDataSource
     initialSize: 5
     minIdle: 5
@@ -46,7 +46,7 @@ spring:
 
   #redis
   redis:
-    host: 106.12.24.9
+    host: 
     port: 6379
     password: zhangmengchengwuzhixiang
     database: 15
@@ -81,7 +81,7 @@ spring:
   activemq:
     user: admin
     password: admin
-    broker-url: tcp://192.168.30.136:61616
+    broker-url: 
     in-memory: true
     pool:
       enabled: true
